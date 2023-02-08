@@ -20,3 +20,93 @@
             width: 90px;
             background-color: lightgray;
         }
+      .timer {
+      color: yellow;
+      font-size: 100px;
+    }
+
+    .timerContainer {
+      text-align: center;
+    }
+
+    .minitimer {
+      color: yellow;
+    }
+
+    .miniContainer {
+      text-align: center;
+      padding-left: 470px;
+      margin-top: -30px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="timerContainer">
+    <span class="timer">00 : 00 : 00</span>
+  </div>
+  <div class="miniContainer">
+    <span class="minitimer">000</span>
+  </div>
+  <div class="buttoncontainer">
+    <button class="startButton">Start</button>
+    <button class="pauseButton">Pause</button>
+    <button class="continueButton">Continue</button>
+    <button class="restartButton">Restart</button>
+  </div>
+  <script>
+let startButton = document.getElementsByClassName("startButton")[0];
+    let pauseButton = document.getElementsByClassName("pauseButton")[0];
+    let continueButton = document.getElementsByClassName("continueButton")[0];
+    let restartButton = document.getElementsByClassName("restartButton")[0];
+    let timer = document.getElementsByClassName("timer")[0];
+    let minitimer = document.getElementsByClassName("minitimer")[0];
+    let seconds = 0;
+    let minutes = 0;
+    let hours = 0;
+    let miliseconds = 0;
+const miliTimeCountFun = () => {
+      miliseconds += 1;
+      if (miliseconds == 1000) {
+        seconds += 1;
+        miliseconds = 0;
+      }
+      if (seconds > 59) {
+        minutes += 1;
+        seconds = 0;
+      }
+      if (minutes > 59) {
+        hours += 1;
+        minutes = 0;
+      }
+      let milisecondtext = miliseconds < 10 ? "00" + miliseconds.toString() : miliseconds;
+      milisecondtext = miliseconds < 100 ? "0" + miliseconds.toString() : miliseconds;
+      let secondtext = seconds < 10 ? "0" + seconds.toString() : seconds;
+      let minutetext = minutes < 10 ? "0" + minutes.toString() : minutes;
+      let hourtext = hours < 10 ? "0" + hours.toString() : hours;
+      timer.textContent = hourtext + " : " + minutetext + " : " + secondtext;
+      minitimer.textContent = milisecondtext;
+    }
+    let miliTimeCount;
+    startButton.addEventListener("click", () => {
+      miliTimeCount = setInterval(miliTimeCountFun, 1);
+    })
+    pauseButton.addEventListener("click", () => {
+      clearInterval(miliTimeCount);
+    })
+    continueButton.addEventListener("click", () => {
+      clearInterval(miliTimeCount);
+      miliTimeCount = setInterval(miliTimeCountFun, 1);
+    })
+    restartButton.addEventListener("click", () => {
+      clearInterval(miliTimeCount);
+      miliseconds = 0;
+      seconds = 0;
+      minutes = 0;
+      hours = 0;
+      miliTimeCount = setInterval(miliTimeCountFun, 1);
+    })
+  </script>
+</body>
+
+</html>
